@@ -1,0 +1,72 @@
+# SudoSuite Core
+sudosuite:
+  consoleformat: '[+plugin v+version] [+subplugin] +message'
+  nopermplayerformat: 'You do NOT have permission for: ~f+command'
+  errorconsoleformat: '+player tried to use +command, but does not have access.'
+  nopermissioncolor: 'c'
+  notifycolor: 'a'
+  alertcolor: 'e'
+  
+# SudoSuite Sub Plugins
+subplugins:
+  chat: true
+  powers: true
+  border: true # todo
+  voting: true # todo
+  shortcuts: true # todo
+  signs: true # todo
+  ores: true # todo
+  broadcasts: true # todo
+  invis: true # todo
+
+# SudoSuite Chat Settings
+chat:
+  who:
+    admingroups:
+    - 'admin'
+    firstline: '~eThere are +current out of +max players online.'
+    adminline: '~cAdmins~f:'
+    noadminline: 'There are currently no ~cAdmins ~fonline.'
+    normalline: '~9Normal Players~f:'
+    nonormalline: 'There are currently no ~9Normal Players ~fonline.'
+  motd:
+  - '~f=========================='
+  - 'Welcome to SudoCraft ~c+player~f!'
+  - 'Check out our website at:'
+  - '~cwww.SudoCraft.com'
+  - '~bNOTE: ~eThis is a TEST SERVER.'
+  - '~f=========================='
+  - ''
+  rules:
+  - 'THE RULES'
+  - '====================='
+  - '1) No Smoking'
+  - '2) Guys: No Shirt, No Service'
+  - '3) Girls: Shirt, No Service'
+  join:
+    prefix: '[~2Join~f] ~7'
+    messages:
+    - '~f+player ~7has joined.'
+    - 'Say hello to ~f+player~7!'
+  leave:
+    prefix: '[~4Leave~f] ~7'
+    messages:
+    - '~f+player ~7has left.'
+    - 'Say goodbye to ~f+player~7!'
+  kick:
+    prefix: '[~cKick~f] ~7'
+    messages:
+    - '~f+player ~7got there ass booted.'
+  chatformat: '[+prefix~f] ~7+player~f+suffix~7: ~f+message'
+  meformat: '~7* ~f+player ~7+message *'
+  consolesayformat: '[~dConsole~f] ~7says: ~f+message'
+  shoutformat: '~d*** ~a+message ~d***'
+  colorformat: '~00~11~22~33~44~55~66~77~88~99~aa~bb~cc~dd~ee~ff~kk'
+  
+# Powers Settings
+powers:
+  slap:
+    max: 15
+    power: 1.25
+    message: 'You are now being bitch-slapped by +player, +amount time(s).'
+    interval: 20

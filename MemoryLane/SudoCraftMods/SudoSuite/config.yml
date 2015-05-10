@@ -1,0 +1,41 @@
+# SudoSuite Core
+sudosuite:
+  consoleformat: '[+plugin v+version] [+subplugin] +message'
+  errorplayerformat: '~cYou do NOT have permission for: ~f+command'
+  errorconsoleformat: '+player tried to use +command, but does not have access.'
+  
+# SudoSuite Sub Plugins
+subplugins:
+  chat: true
+  powers: true
+
+# SudoSuite Chat Settings
+chat:
+  motd:
+  - '~f=========================='
+  - 'Welcome to SudoCraft ~c+player~f!'
+  - 'Check out our website at:'
+  - '~cwww.SudoCraft.com'
+  - '~bNOTE: ~eThis is a TEST SERVER.'
+  - '~f=========================='
+  - ''
+  rules:
+  - 'THE RULES'
+  - '====================='
+  - '1) No Smoking'
+  - '2) Guys: No Shirt, No Service'
+  - '3) Girls: Shirt, No Service'
+  joinprefix: '[~2Join~f] ~7'
+  joinmessages:
+  - '~f+player ~7has joined.'
+  - 'Say hello to ~f+player~7!'
+  leaveprefix: '[~4Leave~f] ~7'
+  leavemessages:
+  - '~f+player ~7has left.'
+  - 'Say goodbye to ~f+player~7!'
+  kickprefix: '[~cKick~f] ~7'
+  kickmessages:
+  - '~f+player ~7got there ass booted.'
+  chatformat: '[+prefix~f] ~7+player~f+suffix~7: ~f+message'
+  meformat: '~7* ~f+player ~7+message *'
+  consolesayformat: '[~dConsole~f] ~7says: ~f+message'

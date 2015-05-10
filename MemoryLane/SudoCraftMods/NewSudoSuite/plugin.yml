@@ -1,0 +1,40 @@
+name: SudoSuite
+main: info.fisherevans.sudosuite.SudoSuite
+version: 0.1
+commands:
+# CHAT
+   me:
+      description: A personal emote
+      usage: /me message
+   say:
+      description: Talks as console
+      usage: /say message
+   s:
+      description: alias of say
+      usage: /s message
+   shout:
+      description: Talk and get people's attention
+      usage: /shout message
+   colors:
+      description: Tells you the color codes
+      usage: /colors
+   who:
+      description: Tells you who's online
+      usage: /who
+   list:
+      description: Tells you who's online
+      usage: /list
+   motd:
+      description: Tells you the MOTD
+      usage: /motd
+   rules:
+      description: Tells you the Rules
+      usage: /rule
+   chatas:
+      description: Talks as a player
+      usage: /chatas player message
+
+# POWERS
+   slap:
+      description: Slap a player
+      usage: /slap player -or- /slap player [number]

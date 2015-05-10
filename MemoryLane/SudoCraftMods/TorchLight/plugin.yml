@@ -1,0 +1,3 @@
+name: TorchLight
+main: com.fisherevans.bukkit.torch_light.TorchLight
+version: 0.1

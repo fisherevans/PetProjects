@@ -1,0 +1,31 @@
+name: SudoSuite
+main: info.fisherevans.sudosuite.SudoSuite
+version: 0.1
+commands:
+# CHAT
+   me:
+      description: A personal emote
+      usage: /me message
+   say:
+      description: Talks as console
+      usage: /say message
+   s:
+      description: alias of say
+      usage: /s message
+   motd:
+      description: Tells you the MOTD
+      usage: /motd
+   rules:
+      description: Tells you the Rules
+      usage: /rule
+   chatas:
+      description: Talks as a player
+      usage: /chatas player message
+
+# POWERS
+   god:
+      description: Gives a player invincability
+      usage: /god -or- /god [player]
+   god:
+      description: Gives a player invincability
+      usage: /god -or- /god [player]
