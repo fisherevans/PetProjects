@@ -3,13 +3,17 @@ package com.fisherevans.miblio_theca.media;
 import com.fisherevans.miblio_theca.Config;
 import com.fisherevans.miblio_theca.formatter.FileNameFormatter;
 import com.fisherevans.miblio_theca.formatter.key_lookup.ID3KeyLookup;
+import com.fisherevans.miblio_theca.formatter.key_lookup.KeyLookup;
+import com.fisherevans.miblio_theca.media.file.AudioFileWrapper;
+import com.fisherevans.miblio_theca.media.file.MediaFileWrapper;
 import com.fisherevans.miblio_theca.util.FileUtil;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * Created by immortal on 5/10/2015.
@@ -17,29 +21,40 @@ import java.util.List;
 public class MediaManager {
     public static final String[] AUDIO_EXTENSIONS = new String[] { "mp3", "wma", "mp4", "wav" };
 
-    public static List<AudioFile> getInputAudioFiles() {
-        Config config = Config.getInstance();
-        List<AudioFile> audioFiles = new LinkedList<>();
-        try {
-            for(File file: FileUtil.getFiles(config.INPUT_DIR, config.INPUT_RECURSION, AUDIO_EXTENSIONS)) {
-                AudioFile audioFile = AudioFileIO.read(file);
-                audioFiles.add(audioFile);
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-            System.exit(1);
+    public static <T1 extends MediaFileWrapper, T2 extends KeyLookup> Map<T1, Set<T1>> readFiles(Class<T1> mediaFileClass, Class<T2> keyLookupClass, String[] validExtensions, File outputDir, String format) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<T1> mediaConstructor = getMediaFileConstructor(mediaFileClass);
+        Constructor<T2> lookupConstructor = getMediaFileConstructor(keyLookupClass);
+        FileNameFormatter formatter = FileNameFormatter.getDefaultFormatter(outputDir, format);
+        Map<T1, Set<T1>> fileMap = new HashMap<>();
+        for(File inputFile: FileUtil.getFiles(Config.getInstance().INPUT_DIR, Config.getInstance().INPUT_RECURSION, validExtensions)) {
+            T1 inputMediaFile = mediaConstructor.newInstance(inputFile);
+            File outputFile = formatter.getFormattedFile(inputFile, constructorInstance(lookupConstructor, inputFile));
+            T1 outputMediaFile = mediaConstructor.newInstance(outputFile);
+            if(!fileMap.containsKey(outputMediaFile))
+                fileMap.put(outputMediaFile, new HashSet<T1>());
+            fileMap.get(outputMediaFile).add(inputMediaFile);
         }
-        return audioFiles;
+        return fileMap;
     }
 
-    public static List<File> getOutoutAudioFiles(List<AudioFile> inputAudioFiles) {
-        Config config = Config.getInstance();
-        FileNameFormatter formatter = FileNameFormatter.getDefaultFormatter(config.OUTPUT_AUDIO_DIR, config.OUTPUT_AUDIO_FORMAT);
-        List<File> outputFiles = new LinkedList<>();
-        for(AudioFile inputAudioFile:inputAudioFiles) {
-            File outputFile = formatter.getFormattedFile(inputAudioFile.getFile(), new ID3KeyLookup(inputAudioFile.getFile()));
-            outputFiles.add(outputFile);
+    private static <T> Constructor<T> getMediaFileConstructor(Class<T> clazz) {
+        try {
+            Constructor<T> constructor = clazz.getDeclaredConstructor(File.class);
+            return constructor;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+            return null;
         }
-        return outputFiles;
+    }
+
+    private static <T> T constructorInstance(Constructor<T> constructor, Object argument) {
+        try {
+            return constructor.newInstance(argument);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+            return null;
+        }
     }
 }

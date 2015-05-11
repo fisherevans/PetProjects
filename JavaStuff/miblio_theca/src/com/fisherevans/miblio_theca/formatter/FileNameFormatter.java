@@ -15,11 +15,6 @@ import java.util.*;
  * Created by immortal on 5/10/2015.
  */
 public class FileNameFormatter {
-
-    // [FIELedddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddD1,FIELD2,'String Literal'|FILTER1:ARG1,ARG2|FILTER2:ARG3,ARG4]
-    // [ALBUM_ARTIST,ARTIST,'(No Artist)']/[ALBUM,'(No Album)']/[ARTIST|APPEND:' - '][ALBUM|APPEND:' - '][TRACK,'0'|ZERO_PAD:2] - [TITLE,'(No Title)']
-    // [ALBUM_ARTIST,ARTIST]/[ALBUM]/[ARTIST,ALBUM_ARTIST] - [ALBUM] - [TRACK|ZERO_PAD:2] - [TITLE]
-
     private File _baseFolder;
     private String _format;
     private List<Object> _parsedFormat;
