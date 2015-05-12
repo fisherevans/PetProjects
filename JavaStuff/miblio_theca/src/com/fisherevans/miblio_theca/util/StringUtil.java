@@ -11,4 +11,16 @@ public class StringUtil {
         time += seconds < 10 ? "0" + seconds : seconds;
         return time;
     }
+
+    public static String join(String[] arr, String glue) {
+        String joined = "";
+        boolean first = true;
+        for(String ele:arr) {
+            if(!first)
+                joined += glue;
+            joined += ele;
+            first = false;
+        }
+        return joined;
+    }
 }

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,10 +52,35 @@ public class FileUtil {
         try {
             FileInputStream fis = new FileInputStream(file);
             String md5 = DigestUtils.md5Hex(fis);
+            fis.close();
             return md5;
         } catch(Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void copy(File from, File to) {
+        if(from.equals(to))
+            return;
+        try {
+            to.getParentFile().mkdirs();
+            Files.copy(from.toPath(), to.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    public static void move(File from, File to) {
+        if(from.equals(to))
+            return;
+        try {
+            to.getParentFile().mkdirs();
+            Files.move(from.toPath(), to.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 }

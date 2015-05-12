@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * Created by immortal on 5/10/2015.
  */
-public abstract class MediaFileWrapper {
+public abstract class MediaFileWrapper implements Comparable<MediaFileWrapper> {
     private File _file;
     private boolean _exists;
     private String _md5;
@@ -19,7 +19,7 @@ public abstract class MediaFileWrapper {
     }
 
     public void refresh() {
-        if(_file.exists()) {
+        if(_file.exists() && _file.isFile() && _file.canRead()) {
             _exists = true;
             _md5 = FileUtil.getMD5(_file);
             _size = _file.length();
@@ -32,9 +32,11 @@ public abstract class MediaFileWrapper {
         }
     }
 
-    public abstract String getDisplayColumns();
+    public boolean containWithin(File folder) {
+        return _file.getAbsolutePath().startsWith(folder.getAbsolutePath());
+    }
 
-    public abstract String getDisplay();
+    public abstract String getDetails();
 
     protected abstract void refreshFile();
 

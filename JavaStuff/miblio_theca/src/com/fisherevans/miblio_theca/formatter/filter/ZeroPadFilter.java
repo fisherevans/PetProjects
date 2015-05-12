@@ -4,6 +4,7 @@ package com.fisherevans.miblio_theca.formatter.filter;
  * Created by immortal on 5/10/2015.
  */
 public class ZeroPadFilter extends Filter {
+    public static final String NAME = "ZERO_PAD";
     private static final Integer DEFAULT_PADDING_LENGTH = 0;
 
     private Integer _paddingLength = null;
@@ -27,8 +28,8 @@ public class ZeroPadFilter extends Filter {
 
     @Override
     public String filter(String input) {
-        int paddigLength = getPaddingLength();
-        for(;input.length() < paddigLength;input = "0" + input);
+        int paddingLength = getPaddingLength();
+        for(;input.length() < paddingLength;input = "0" + input);
         return input;
     }
 }

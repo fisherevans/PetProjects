@@ -12,7 +12,7 @@ import java.io.File;
  * Created by immortal on 5/10/2015.
  */
 public class AudioFileWrapper extends MediaFileWrapper {
-    private static String DISPLAY_FORMAT = "%-20s | %-20s | %-20s | %-20s | %5s | %5s | %7s";
+    private static String DISPLAY_FORMAT = "[Track: %s] [Length: %s] [BitRate: %skbs] [Format: %s]";
 
     private AudioFile _audioFile;
     private Integer _bitRate;
@@ -23,18 +23,18 @@ public class AudioFileWrapper extends MediaFileWrapper {
         super(file);
     }
 
+/*
     @Override
     public String getDisplayColumns() {
         return String.format(DISPLAY_FORMAT, "Artist", "Album", "Album Artist", "Track", "Title", "Length", "Bit Rate");
     }
+*/
 
     @Override
-    public String getDisplay() {
+    public String getDetails() {
         if(exists()) {
             Tag tag = _audioFile.getTag();
-            return String.format(DISPLAY_FORMAT, tag.getFirst(FieldKey.ARTIST), tag.getFirst(FieldKey.ALBUM),
-                    tag.getFirst(FieldKey.ALBUM_ARTIST), tag.getFirst(FieldKey.TRACK), tag.getFirst(FieldKey.TITLE),
-                    _lengthPretty, _bitRate + "");
+            return String.format(DISPLAY_FORMAT, tag.getFirst(FieldKey.TRACK), _lengthPretty, _bitRate + "", _audioFile.getAudioHeader().getFormat());
         } else
             return "";
     }
@@ -62,5 +62,26 @@ public class AudioFileWrapper extends MediaFileWrapper {
 
     public AudioFile getAudioFile() {
         return _audioFile;
+    }
+
+    public Integer getBitRate() {
+        return _bitRate;
+    }
+
+    public Integer getLengthSeconds() {
+        return _lengthSeconds;
+    }
+
+    public String getLengthPretty() {
+        return _lengthPretty;
+    }
+
+    @Override
+    public int compareTo(MediaFileWrapper mediaFile) {
+        if(mediaFile instanceof AudioFileWrapper) {
+            AudioFileWrapper other = (AudioFileWrapper) mediaFile;
+            return other.getBitRate() - getBitRate();
+        } else
+            return 0;
     }
 }
