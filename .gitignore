@@ -1,5 +1,5 @@
 # Ignore
 .git
 */.idea/workspace.xml
-*/out
-*/javadoc
+*/out/
+*/javadoc/
