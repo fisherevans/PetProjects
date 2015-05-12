@@ -1,4 +1,4 @@
-package com.fisherevans.miblio_theca.media.worker;
+package com.fisherevans.miblio_theca.worker;
 
 import com.fisherevans.miblio_theca.Config;
 import com.fisherevans.miblio_theca.formatter.key_lookup.KeyLookup;

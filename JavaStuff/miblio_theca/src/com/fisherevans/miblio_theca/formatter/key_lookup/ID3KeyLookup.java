@@ -1,5 +1,7 @@
 package com.fisherevans.miblio_theca.formatter.key_lookup;
 
+import com.fisherevans.miblio_theca.media.file.AudioFileWrapper;
+import com.fisherevans.miblio_theca.media.file.MediaFileWrapper;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldKey;
@@ -12,18 +14,12 @@ import java.lang.reflect.Field;
  * Created by immortal on 5/10/2015.
  */
 public class ID3KeyLookup implements KeyLookup {
-    private File _file;
-    private AudioFile _audioFile;
-    private Tag _tag;
+    private AudioFileWrapper _audioFile;
 
-    public ID3KeyLookup(File file) {
-        try {
-            _file = file;
-            _audioFile = AudioFileIO.read(_file);
-            _tag = _audioFile.getTag();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public ID3KeyLookup(MediaFileWrapper file) {
+        if(!(file instanceof AudioFileWrapper))
+            throw new RuntimeException("ID3 expects audio wrapper.");
+        _audioFile = (AudioFileWrapper) file;
     }
 
     @Override
@@ -31,7 +27,7 @@ public class ID3KeyLookup implements KeyLookup {
         FieldKey fieldKey = FieldKey.valueOf(key);
         if(fieldKey == null)
             return "";
-        String value = _tag.getFirst(fieldKey);
+        String value = _audioFile.getAudioFile().getTag().getFirst(fieldKey);
         return value == null ? "" : value;
     }
 }

@@ -22,7 +22,7 @@ public class MediaManager {
         Map<String, Set<T1>> fileMap = new HashMap<>();
         for(File inputFile: FileUtil.getFiles(Config.getInstance().INPUT_DIR, Config.getInstance().INPUT_RECURSION, validExtensions)) {
             T1 inputMediaFile = mediaConstructor.newInstance(inputFile);
-            String formattedOutput = formatter.compute(constructorInstance(lookupConstructor, inputFile));
+            String formattedOutput = formatter.compute(constructorInstance(lookupConstructor, inputMediaFile));
             if(!fileMap.containsKey(formattedOutput))
                 fileMap.put(formattedOutput, new HashSet<T1>());
             fileMap.get(formattedOutput).add(inputMediaFile);

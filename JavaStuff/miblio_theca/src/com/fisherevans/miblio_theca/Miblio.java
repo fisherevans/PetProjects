@@ -1,7 +1,7 @@
 package com.fisherevans.miblio_theca;
 
-import com.fisherevans.miblio_theca.media.worker.AudioWorker;
-import com.fisherevans.miblio_theca.media.worker.Worker;
+import com.fisherevans.miblio_theca.worker.AudioWorker;
+import com.fisherevans.miblio_theca.worker.Worker;
 import com.fisherevans.miblio_theca.formatter.key_lookup.KeyLookup;
 import com.fisherevans.miblio_theca.media.MediaManager;
 import com.fisherevans.miblio_theca.media.file.MediaFileWrapper;
@@ -132,39 +132,4 @@ public class Miblio<T1 extends MediaFileWrapper, T2 extends KeyLookup> {
         File to = new File(_worker.getOutputDirectory().getAbsolutePath() + "\\" + formattedOutput + "." + FileUtil.getFileExtension(fromWrapper.getFile()));
         FileUtil.move(fromWrapper.getFile(), to);
     }
-
-/*
-    public  void main() throws Exception {
-        System.out.println("Finding new media files...");
-        System.out.println("Generating new file names...");
-        List<File> outputFiles = MediaManager.getOutputAudioFiles(inputAudioFiles);
-        System.out.println("Mapping new file locations...");
-
-
-        for(File toFile:fileMap.keySet()) {
-            String toMD5 = "";
-            if(toFile.exists()) {
-                toMD5 = FileUtil.getMD5(toFile);
-                fileMap.get(toFile).add(AudioFileIO.read(toFile));
-            }
-            Collections.sort(fileMap.get(toFile), MediaFileWrapperQualityComparator.getInstance());
-            if(fileMap.get(toFile).size() > 1) {
-                //System.out.println(toFile.getAbsolutePath());
-                for(AudioFile fromFile:fileMap.get(toFile)) {
-                    String path = fromFile.getFile().getAbsolutePath();
-                    String length = StringUtil.getMinuteSeconds(fromFile.getAudioHeader().getTrackLength());
-                    long bitRate = fromFile.getAudioHeader().getBitRateAsNumber();
-                    String md5 = FileUtil.getMD5(fromFile.getFile());
-                    String out = "> " + path + "(";
-                    out += "Length=" + length + ", ";
-                    out += "BitRate=" + bitRate + ", ";
-                    out += "MD5=" + md5 + ") ";
-                    if(toMD5.equals(md5))
-                        out += "Same as stored";
-                    //System.out.println(out);
-                }
-            }
-        }
-    }
-    */
 }

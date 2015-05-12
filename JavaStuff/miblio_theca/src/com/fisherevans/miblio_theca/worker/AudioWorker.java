@@ -1,9 +1,7 @@
-package com.fisherevans.miblio_theca.media.worker;
+package com.fisherevans.miblio_theca.worker;
 
 import com.fisherevans.miblio_theca.formatter.key_lookup.ID3KeyLookup;
-import com.fisherevans.miblio_theca.formatter.key_lookup.KeyLookup;
 import com.fisherevans.miblio_theca.media.file.AudioFileWrapper;
-import com.fisherevans.miblio_theca.media.file.MediaFileWrapper;
 
 import java.io.File;
 

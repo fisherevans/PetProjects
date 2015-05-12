@@ -1,13 +1,13 @@
 package com.fisherevans.miblio_theca.formatter;
 
-import com.fisherevans.miblio_theca.formatter.filter.Filter;
+import com.fisherevans.miblio_theca.formatter.filter.SegmentFilter;
 import com.fisherevans.miblio_theca.formatter.filter.ZeroPadFilter;
 import com.fisherevans.miblio_theca.formatter.key_lookup.KeyLookup;
 import com.fisherevans.miblio_theca.formatter.segment.FormatSegment;
 import com.fisherevans.miblio_theca.formatter.segment.PlaceholderSegment;
 import com.fisherevans.miblio_theca.formatter.segment.StaticSegment;
 
-import java.io.File;
+import javax.swing.text.Segment;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
@@ -15,7 +15,7 @@ import java.util.*;
  * Created by immortal on 5/10/2015.
  */
 public class Formatter {
-    private Map<String, Constructor> _filters;
+    private Map<String, Constructor<SegmentFilter>> _filters;
     private String _format;
     private List<FormatSegment> _segments;
 
@@ -24,7 +24,7 @@ public class Formatter {
     }
 
     public void registerFilter(String filterName, Class filterClass) {
-        Constructor constructor = null;
+        Constructor<SegmentFilter> constructor = null;
         try {
             constructor = filterClass.getConstructor();
         } catch (NoSuchMethodException e) {
@@ -33,12 +33,12 @@ public class Formatter {
         _filters.put(filterName, constructor);
     }
 
-    public Filter getFilter(String filterName, String[] arguments) {
+    public SegmentFilter getFilter(String filterName, String[] arguments) {
         try {
-            Constructor constructor = _filters.get(filterName);
+            Constructor<SegmentFilter> constructor = _filters.get(filterName);
             if(constructor == null)
                 return null;
-            Filter filter = (Filter) constructor.newInstance();
+            SegmentFilter filter = (SegmentFilter) constructor.newInstance();
             filter.setArguments(arguments);
             return filter;
         } catch (Exception e) {
