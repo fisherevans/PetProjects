@@ -9,6 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class FileUtil {
     }
 
     public static List<File> getFiles(File folder, int recursionDepth, String ... validExtensions) {
-        List<File> files = new LinkedList<>();
+        List<File> files = new ArrayList<>();
         for(File child:folder.listFiles()) {
             if(child.exists() && child.canRead()) {
                 if(child.isFile() && FileUtil.hasValidExtension(child, validExtensions)) {
@@ -64,6 +65,7 @@ public class FileUtil {
         if(from.equals(to))
             return;
         try {
+            System.out.println("  Copying " + from.getAbsolutePath() + " -> " + to.getAbsolutePath());
             to.getParentFile().mkdirs();
             Files.copy(from.toPath(), to.toPath());
         } catch (IOException e) {
@@ -76,11 +78,17 @@ public class FileUtil {
         if(from.equals(to))
             return;
         try {
+            System.out.println("  Moving " + from.getAbsolutePath() + " -> " + to.getAbsolutePath());
             to.getParentFile().mkdirs();
             Files.move(from.toPath(), to.toPath());
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    public static void delete(File file) {
+        System.out.println("  Deleting " + file.getAbsolutePath());
+        file.delete();
     }
 }

@@ -1,11 +1,13 @@
 package com.fisherevans.miblio_theca.formatter;
 
+import com.fisherevans.miblio_theca.exception.InsufficientKeyDataException;
 import com.fisherevans.miblio_theca.formatter.filter.SegmentFilter;
 import com.fisherevans.miblio_theca.formatter.filter.ZeroPadFilter;
 import com.fisherevans.miblio_theca.formatter.segment.FormatSegment;
 import com.fisherevans.miblio_theca.formatter.segment.PlaceholderSegment;
 import com.fisherevans.miblio_theca.formatter.segment.StaticSegment;
 import com.fisherevans.miblio_theca.media.file.MediaFileWrapper;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -74,10 +76,20 @@ public class Formatter {
         return _format;
     }
 
-    public String compute(MediaFileWrapper mediaFile) {
-        String text = "";
-        for(FormatSegment segment:_segments)
-            text += segment.getText(mediaFile);
+    public String compute(MediaFileWrapper mediaFile) throws InsufficientKeyDataException {
+        String segmentText, text = "";
+        Set<String> missingKeys = new HashSet<>();
+        for(FormatSegment segment:_segments) {
+            try {
+                segmentText = segment.getFieldText(mediaFile);
+                text += segment.filterText(segmentText);
+            } catch (InsufficientKeyDataException e) {
+                for(String key:e.getKeys())
+                    missingKeys.add(key);
+            }
+        }
+        if(missingKeys.size() > 0)
+            throw new InsufficientKeyDataException(missingKeys.toArray(new String[0]));
         return text;
     }
 

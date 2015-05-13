@@ -13,12 +13,12 @@ public abstract class MediaFileWrapper implements Comparable<MediaFileWrapper> {
     private String _md5;
     private Long _size = null;
 
-    public MediaFileWrapper(File file) {
+    public MediaFileWrapper(File file) throws Exception {
         _file = file;
         refresh();
     }
 
-    public void refresh() {
+    public void refresh() throws Exception {
         if(_file.exists() && _file.isFile() && _file.canRead()) {
             _exists = true;
             _md5 = FileUtil.getMD5(_file);
@@ -33,14 +33,16 @@ public abstract class MediaFileWrapper implements Comparable<MediaFileWrapper> {
     }
 
     public boolean containWithin(File folder) {
-        return _file.getAbsolutePath().startsWith(folder.getAbsolutePath());
+        return _file.getAbsolutePath().startsWith(folder.getAbsolutePath() + File.separator);
     }
 
     public abstract String getDetails();
 
     public abstract String keyLookup(String key);
 
-    protected abstract void refreshFile();
+    public abstract void keySet(String key, String value) throws Exception;
+
+    protected abstract void refreshFile() throws Exception;
 
     protected abstract void nullifyFile();
 

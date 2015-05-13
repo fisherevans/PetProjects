@@ -13,7 +13,17 @@ public class StaticSegment implements FormatSegment {
     }
 
     @Override
-    public String getText(MediaFileWrapper mediaFile) {
+    public String getDescriptor() {
         return _text;
+    }
+
+    @Override
+    public String getFieldText(MediaFileWrapper mediaFile) {
+        return _text;
+    }
+
+    @Override
+    public String filterText(String text) {
+        return text;
     }
 }

@@ -10,6 +10,8 @@ import com.fisherevans.miblio_theca.util.StringUtil;
 
 import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by immortal on 5/10/2015.
@@ -19,6 +21,7 @@ public class Miblio<T1 extends MediaFileWrapper> {
     private Map<String, Set<T1>> _fileMap;
 
     public static void main(String[] args) throws Exception {
+        Logger.getLogger("org.jaudiotagger").setLevel(Level.SEVERE);
         new Miblio(new AudioWorker()).run();
     }
 
@@ -31,6 +34,7 @@ public class Miblio<T1 extends MediaFileWrapper> {
         readFiles();
         copySingles();
         copyMultiples();
+        System.out.println("Cleaning up input folder...");
         cleanEmptyFolders(Config.getInstance().INPUT_DIR);
         System.out.println();
         System.out.println("Process finished.");
@@ -50,7 +54,7 @@ public class Miblio<T1 extends MediaFileWrapper> {
     }
 
     private void readFiles() {
-        System.out.print("Scanning files...");
+        System.out.println("Scanning files...");
         try {
             _fileMap = MediaManager.readFiles(_worker.getMediaFileWrapperClass(),
                     _worker.getValidExtensions(), _worker.getOutputDirectory(), _worker.getFormat());
@@ -58,7 +62,8 @@ public class Miblio<T1 extends MediaFileWrapper> {
             e.printStackTrace();
             System.exit(1);
         }
-        System.out.println(" Done.");
+        System.out.println("Done.");
+        System.out.println();
     }
 
     private void copySingles() {
@@ -106,11 +111,12 @@ public class Miblio<T1 extends MediaFileWrapper> {
                 else
                     break;
             }
+            System.out.println();
             for(int i = 0;i < files.size();i++) {
                 if(input-1 == i)
                     continue;
                 MediaFileWrapper file = files.get(i);
-                file.getFile().delete();
+                FileUtil.delete(file.getFile());
             }
             MediaFileWrapper file = files.get(input-1);
             moveFile(file, formattedOutput);
@@ -122,13 +128,13 @@ public class Miblio<T1 extends MediaFileWrapper> {
             if(file.exists() && file.canWrite() && file.isDirectory()) {
                 cleanEmptyFolders(file);
                 if(file.listFiles().length == 0)
-                    file.delete();
+                    FileUtil.delete(file);
             }
         }
     }
 
     private void moveFile(MediaFileWrapper fromWrapper, String formattedOutput) {
-        File to = new File(_worker.getOutputDirectory().getAbsolutePath() + "\\" + formattedOutput + "." + FileUtil.getFileExtension(fromWrapper.getFile()));
+        File to = new File(_worker.getOutputDirectory().getAbsolutePath() + File.separator + formattedOutput + "." + FileUtil.getFileExtension(fromWrapper.getFile()));
         FileUtil.move(fromWrapper.getFile(), to);
     }
 }

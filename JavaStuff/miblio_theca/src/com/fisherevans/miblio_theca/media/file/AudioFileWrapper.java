@@ -3,6 +3,7 @@ package com.fisherevans.miblio_theca.media.file;
 import com.fisherevans.miblio_theca.util.StringUtil;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 
@@ -19,7 +20,7 @@ public class AudioFileWrapper extends MediaFileWrapper {
     private Integer _lengthSeconds;
     private String _lengthPretty;
 
-    public AudioFileWrapper(File file) {
+    public AudioFileWrapper(File file) throws Exception {
         super(file);
     }
 
@@ -41,26 +42,27 @@ public class AudioFileWrapper extends MediaFileWrapper {
 
     @Override
     public String keyLookup(String key) {
-        if(_audioFile == null)
-            return "";
         FieldKey fieldKey = FieldKey.valueOf(key);
-        if(fieldKey == null)
+        if(fieldKey == null || _audioFile == null || _audioFile.getTag() == null)
             return "";
-        String value = _audioFile.getTag().getFirst(fieldKey);
-        return value == null ? "" : value;
+        return _audioFile.getTag().getFirst(fieldKey);
     }
 
     @Override
-    protected void refreshFile() {
-        try {
-            _audioFile = AudioFileIO.read(getFile());
-            _bitRate = (int) _audioFile.getAudioHeader().getBitRateAsNumber();
-            _lengthSeconds = _audioFile.getAudioHeader().getTrackLength();
-            _lengthPretty = StringUtil.getMinuteSeconds(_lengthSeconds);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+    public void keySet(String key, String value) throws Exception {
+        FieldKey fieldKey = FieldKey.valueOf(key);
+        if(fieldKey == null || _audioFile == null || _audioFile.getTag() == null)
+            return;
+        _audioFile.getTag().setField(fieldKey, value);
+        _audioFile.commit();
+    }
+
+    @Override
+    protected void refreshFile() throws Exception {
+        _audioFile = AudioFileIO.read(getFile());
+        _bitRate = (int) _audioFile.getAudioHeader().getBitRateAsNumber();
+        _lengthSeconds = _audioFile.getAudioHeader().getTrackLength();
+        _lengthPretty = StringUtil.getMinuteSeconds(_lengthSeconds);
     }
 
     @Override
