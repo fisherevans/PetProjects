@@ -40,6 +40,17 @@ public class AudioFileWrapper extends MediaFileWrapper {
     }
 
     @Override
+    public String keyLookup(String key) {
+        if(_audioFile == null)
+            return "";
+        FieldKey fieldKey = FieldKey.valueOf(key);
+        if(fieldKey == null)
+            return "";
+        String value = _audioFile.getTag().getFirst(fieldKey);
+        return value == null ? "" : value;
+    }
+
+    @Override
     protected void refreshFile() {
         try {
             _audioFile = AudioFileIO.read(getFile());

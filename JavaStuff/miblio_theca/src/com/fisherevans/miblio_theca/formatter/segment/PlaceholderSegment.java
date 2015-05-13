@@ -2,7 +2,7 @@ package com.fisherevans.miblio_theca.formatter.segment;
 
 import com.fisherevans.miblio_theca.formatter.Formatter;
 import com.fisherevans.miblio_theca.formatter.filter.SegmentFilter;
-import com.fisherevans.miblio_theca.formatter.key_lookup.KeyLookup;
+import com.fisherevans.miblio_theca.media.file.MediaFileWrapper;
 
 /**
  * Created by h13730 on 5/12/2015.
@@ -25,10 +25,10 @@ public class PlaceholderSegment implements FormatSegment {
     }
 
     @Override
-    public String getText(KeyLookup keyLookup) {
+    public String getText(MediaFileWrapper mediaFile) {
         String result = "";
         for(String key:_keys) {
-            result = keyLookup.value(key).replaceAll("[\\\\/]", "-").replaceAll("\\.", " ").trim();
+            result = mediaFile.keyLookup(key).replaceAll("[\\\\/]", "-").replaceAll("\\.", " ").trim();
             if(result.length() > 0)
                 break;
         }

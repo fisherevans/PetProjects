@@ -38,6 +38,8 @@ public abstract class MediaFileWrapper implements Comparable<MediaFileWrapper> {
 
     public abstract String getDetails();
 
+    public abstract String keyLookup(String key);
+
     protected abstract void refreshFile();
 
     protected abstract void nullifyFile();

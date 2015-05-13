@@ -1,6 +1,5 @@
 package com.fisherevans.miblio_theca.worker;
 
-import com.fisherevans.miblio_theca.formatter.key_lookup.ID3KeyLookup;
 import com.fisherevans.miblio_theca.media.file.AudioFileWrapper;
 
 import java.io.File;
@@ -8,11 +7,11 @@ import java.io.File;
 /**
  * Created by h13730 on 5/12/2015.
  */
-public class AudioWorker extends Worker<AudioFileWrapper, ID3KeyLookup> {
+public class AudioWorker extends Worker<AudioFileWrapper> {
     private static String[] VALID_EXTENSIONS = new String[] { "mp3", "wma", "mp4", "wav" };
 
     public AudioWorker() {
-        super(AudioFileWrapper.class, ID3KeyLookup.class);
+        super(AudioFileWrapper.class);
     }
 
     @Override

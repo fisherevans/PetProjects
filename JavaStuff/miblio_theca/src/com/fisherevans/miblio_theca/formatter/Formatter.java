@@ -2,12 +2,11 @@ package com.fisherevans.miblio_theca.formatter;
 
 import com.fisherevans.miblio_theca.formatter.filter.SegmentFilter;
 import com.fisherevans.miblio_theca.formatter.filter.ZeroPadFilter;
-import com.fisherevans.miblio_theca.formatter.key_lookup.KeyLookup;
 import com.fisherevans.miblio_theca.formatter.segment.FormatSegment;
 import com.fisherevans.miblio_theca.formatter.segment.PlaceholderSegment;
 import com.fisherevans.miblio_theca.formatter.segment.StaticSegment;
+import com.fisherevans.miblio_theca.media.file.MediaFileWrapper;
 
-import javax.swing.text.Segment;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
@@ -75,10 +74,10 @@ public class Formatter {
         return _format;
     }
 
-    public String compute(KeyLookup keyLookup) {
+    public String compute(MediaFileWrapper mediaFile) {
         String text = "";
         for(FormatSegment segment:_segments)
-            text += segment.getText(keyLookup);
+            text += segment.getText(mediaFile);
         return text;
     }
 

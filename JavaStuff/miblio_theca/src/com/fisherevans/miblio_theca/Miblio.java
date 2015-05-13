@@ -2,7 +2,6 @@ package com.fisherevans.miblio_theca;
 
 import com.fisherevans.miblio_theca.worker.AudioWorker;
 import com.fisherevans.miblio_theca.worker.Worker;
-import com.fisherevans.miblio_theca.formatter.key_lookup.KeyLookup;
 import com.fisherevans.miblio_theca.media.MediaManager;
 import com.fisherevans.miblio_theca.media.file.MediaFileWrapper;
 import com.fisherevans.miblio_theca.util.FileUtil;
@@ -15,7 +14,7 @@ import java.util.*;
 /**
  * Created by immortal on 5/10/2015.
  */
-public class Miblio<T1 extends MediaFileWrapper, T2 extends KeyLookup> {
+public class Miblio<T1 extends MediaFileWrapper> {
     private Worker _worker;
     private Map<String, Set<T1>> _fileMap;
 
@@ -53,7 +52,7 @@ public class Miblio<T1 extends MediaFileWrapper, T2 extends KeyLookup> {
     private void readFiles() {
         System.out.print("Scanning files...");
         try {
-            _fileMap = MediaManager.readFiles(_worker.getMediaFileWrapperClass(), _worker.getKeyLookupClass(),
+            _fileMap = MediaManager.readFiles(_worker.getMediaFileWrapperClass(),
                     _worker.getValidExtensions(), _worker.getOutputDirectory(), _worker.getFormat());
         } catch (Exception e) {
             e.printStackTrace();
