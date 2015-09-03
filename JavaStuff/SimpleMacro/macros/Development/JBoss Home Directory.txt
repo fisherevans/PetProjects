@@ -1,0 +1,2 @@
+jboss.home=C\:/development/jboss-eap-4.3
+jboss.seam.home=C\:/development/jboss-seam-2.1.2

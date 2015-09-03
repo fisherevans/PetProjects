@@ -1,0 +1,1 @@
+tail -f /usr/local/jboss/server/production/log/server.log /usr/local/jboss/server/production/log/iwr/webconnect.log

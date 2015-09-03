@@ -1,0 +1,1 @@
+tail -f /usr/local/jboss/server/train/log/server.log /usr/local/jboss/server/train/log/trniwr/webconnect.log

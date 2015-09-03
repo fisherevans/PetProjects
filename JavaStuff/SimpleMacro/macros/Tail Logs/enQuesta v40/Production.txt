@@ -1,0 +1,1 @@
+tail -f /usr/local/jboss/server/production/log/enquesta40/enquesta.log
