@@ -1,29 +1,21 @@
 package com.fisherevans.simple_macro;
 
-import java.awt.Component;
 import java.awt.Menu;
-import java.awt.MenuComponent;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-
 import com.fisherevans.simple_macro.actions.ActionDirector;
 import com.fisherevans.simple_macro.actions.ClipboardAction;
 import com.fisherevans.simple_macro.actions.ExitAction;
+import com.fisherevans.simple_macro.actions.ExplorerAction;
 import com.fisherevans.simple_macro.actions.ReloadAction;
 import com.fisherevans.simple_macro.actions.SimpleAction;
 
@@ -35,8 +27,6 @@ public class SimpleMacro implements ActionListener {
 	private PopupMenu _popupMenu;
 	
 	private ActionDirector _actionDirector;
-	
-	private MenuItem _exitItem, _reloadItem;
 	
 	private SimpleMacro() {
 		try {
@@ -77,8 +67,9 @@ public class SimpleMacro implements ActionListener {
 			_popupMenu.removeAll();
 			parseFolder(_popupMenu, new File("macros"));
 		    _popupMenu.addSeparator();
-		    _reloadItem = addRootAction("Reload", new ReloadAction());
-		    _exitItem = addRootAction("Exit", new ExitAction());
+		    addRootAction("Reload", new ReloadAction());
+		    addRootAction("Open Macros", new ExplorerAction(new File("macros")));
+		    addRootAction("Exit", new ExitAction());
 			_systemTray.add(_trayIcon);
 		} catch (Exception e) {
 			UIHelper.errorThenExit(e);

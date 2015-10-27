@@ -2,8 +2,6 @@ package com.fisherevans.simple_macro;
 
 import java.awt.SystemTray;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public class Launcher {

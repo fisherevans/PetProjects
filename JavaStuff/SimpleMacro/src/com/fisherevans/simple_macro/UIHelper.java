@@ -4,9 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import java.net.URL;
 
-import javax.swing.Action;
 import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class UIHelper {
