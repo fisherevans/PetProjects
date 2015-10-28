@@ -1,5 +1,6 @@
 package com.fisherevans.twcfs.game;
 
+import com.fisherevans.twcfs.input.Key;
 import com.fisherevans.twcfs.input.KeyConsumer;
 import org.newdawn.slick.Graphics;
 
@@ -14,4 +15,8 @@ public abstract class State implements KeyConsumer {
   public abstract void update(float delta);
 
   public abstract void render(Graphics gfx);
+
+  protected boolean getKeyState(Key key) {
+    return Game.getInstance().getKeyboardManager().getKeyState(key);
+  }
 }
