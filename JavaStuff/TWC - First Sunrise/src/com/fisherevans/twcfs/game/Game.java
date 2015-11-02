@@ -1,6 +1,7 @@
 package com.fisherevans.twcfs.game;
 
 import com.fisherevans.twcfs.Constants;
+import com.fisherevans.twcfs.game.states.adventure.AdventureState;
 import com.fisherevans.twcfs.game.states.splash.SplashState;
 import com.fisherevans.twcfs.input.KeyboardManager;
 import org.newdawn.slick.*;
@@ -28,7 +29,8 @@ public class Game extends BasicGame implements KeyListener {
     _container = gameContainer;
     _keyboardManager = new KeyboardManager();
     gameContainer.getInput().addKeyListener(_keyboardManager);
-    _currentState = new SplashState();
+    //_currentState = new SplashState();
+    _currentState = new AdventureState();
   }
 
   @Override

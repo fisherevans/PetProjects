@@ -5,4 +5,7 @@ package com.fisherevans.twcfs;
  */
 public class Constants {
   public static final String TITLE = "The Wayward Crown - First Sunrise";
+  public static final int BASE_WIDTH = 480;
+  public static final int BASE_HEIGHT = 270;
+  public static final int SCALE = 3;
 }

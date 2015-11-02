@@ -17,4 +17,8 @@ public class World {
   public void add(Box box) {
     _boxes.add(box);
   }
+
+  public void addAll(Collection<Box> newBoxes) {
+    _boxes.addAll(newBoxes);
+  }
 }

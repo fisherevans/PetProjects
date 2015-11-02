@@ -36,6 +36,14 @@ public class Box {
     _position.setY(y);
   }
 
+  public float getCenterX() {
+    return getX() + getWidth()/2f;
+  }
+
+  public float getCenterY() {
+    return getY() + getHeight()/2f;
+  }
+
   public float getWidth() {
     return _size.getX();
   }
@@ -82,6 +90,39 @@ public class Box {
 
   public void setAcceleration(Vector acceleration) {
     _acceleration = acceleration;
+  }
+
+  public boolean canJoin(Box other) {
+    return (
+              getX() == other.getX() &&
+              getWidth() == other.getWidth() &&
+              getY() + getHeight() == other.getY()
+           ) || (
+              getY() == other.getY() &&
+              getHeight() == other.getHeight() &&
+              getX() + getWidth() == other.getX()
+          );
+  }
+
+  public void add(Box other) {
+    float x1 = Math.min(getX(), other.getX());
+    float y1 = Math.min(getY(), other.getY());
+    float x2 = Math.max(getX() + getWidth(), other.getX() + other.getWidth());
+    float y2 = Math.max(getY() + getHeight(), other.getY() + other.getHeight());
+    _position = new Vector(x1, y1);
+    _size = new Vector(x2-x1, y2-y1);
+  }
+
+  public boolean intersectsX(Box other) {
+    return getX() < other.getX() + other.getWidth() && other.getX() < getX() + getWidth();
+  }
+
+  public boolean intersectsY(Box other) {
+    return getY() < other.getY() + other.getHeight() && other.getY() < getY() + getHeight();
+  }
+
+  public boolean intersects(Box other) {
+    return intersectsX(other) && intersectsY(other);
   }
 
   public String toString() {
